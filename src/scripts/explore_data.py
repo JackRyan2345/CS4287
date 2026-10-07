@@ -27,25 +27,36 @@ for a in ax.flat: a.axis("off")
 plt.tight_layout(); plt.show()
 
 
-widths, heights, damage = [], [], []
+widths, heights, damage, aspect_ratios = [], [], [], []
 
 for img_rel, mask_rel in pairs:
     w, h = Image.open(os.path.join(TR, img_rel)).size
     widths.append(w); heights.append(h)
+    aspect_ratios.append(w/h)
     mask = np.array(Image.open(os.path.join(TR, mask_rel)).convert("L"))
-    damage.append((mask > 127).sum() / 100)
+    damage.append((mask > 127).mean() * 100)
 
 print("Width: ", min(widths), " - ", max(widths), " Height: ", min(heights), " - ", max(heights))
+print(f"Aspect ratio:" f"min {min(aspect_ratios):.2f}, "
+      f"max {max(aspect_ratios):.2f}, "
+      f"mean {np.mean(aspect_ratios):.2f}, " 
+      f"median {np.median(aspect_ratios):.2f}")
 print(f"Damage per image: mean {np.mean(damage):.1f}%, median {np.median(damage):.1f}%")
 
-fig, ax = plt.subplots(1, 2, figsize=(12, 4))
+fig, ax = plt.subplots(1, 3, figsize=(12, 4))
 ax[0].scatter(widths, heights, s=4)
 ax[0].set_xlabel("width")
 ax[0].set_ylabel("height"); ax[0].set_title("Image sizes")
-ax[1].hist(damage, bins=50)
-ax[1].set_xlabel("% of pixels that are damage")
+
+ax[1].hist(aspect_ratios, bins=50)
+ax[1].set_xlabel("width / height")
 ax[1].set_ylabel("images")
-ax[1].set_title("Damage per mask")
+ax[1].set_title("Aspect ratios")
+
+ax[2].hist(damage, bins=50)
+ax[2].set_xlabel("% of pixels that are damage")
+ax[2].set_ylabel("images")
+ax[2].set_title("Damage per mask")
 
 plt.tight_layout(); plt.show()
 
