@@ -64,11 +64,11 @@ class UNET(nn.Module):
 
         return self.final_conv(x)
 
-model = UNET()
+#model = UNET()
 
-x = torch.randn(2, 3, 384, 576)
+#x = torch.randn(2, 3, 384, 576)
 
-y = model(x)
+#y = model(x)
 
-print("Input:", x.shape)
-print("Output:", y.shape)
+#print("Input:", x.shape)
+#print("Output:", y.shape)
