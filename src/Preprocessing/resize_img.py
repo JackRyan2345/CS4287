@@ -4,11 +4,12 @@ from PIL import Image, ImageOps
 
 # Paths are built from this file's location, so it works from any working directory
 BASE_DIR = Path(__file__).resolve().parent           # .../src/scripts/Preprocessing
-REPO_ROOT = BASE_DIR.parents[2]                      # .../CS4287
-input_dir = REPO_ROOT / "CarDD_release" / "CarDD_SOD" / "CarDD-TR"
+REPO_ROOT = BASE_DIR.parents[1]                      # .../CS4287
+input_dir = REPO_ROOT / "CarDD_release" / "CarDD_SOD"
 output_dir = BASE_DIR / "Output"
 TARGET_SIZE = (384, 576)
 EXTENSIONS = (".png", ".jpg")
+EXCLUDE_DIRS = {"CarDD-TE-Edge" ,"CarDD-TR-Edge",  "CarDD-VAL-Edge"}
 
 def resize_image(image_path, output_folder, size):
     try:
@@ -29,6 +30,7 @@ def get_output_directory(input_directory):
     return os.path.join(output_dir, relative_path)
 
 for subdir, dirs, files in os.walk(input_dir):
+    dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
     for file in files:
         if file.lower().endswith(EXTENSIONS):
             input_file_path = os.path.join(subdir, file)
