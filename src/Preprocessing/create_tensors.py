@@ -1,5 +1,6 @@
 from pathlib import Path
-
+import random
+from torch.utils.data import Subset
 import numpy as np
 import torch
 from PIL import Image
@@ -7,35 +8,57 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import datasets, transforms
 import sys
 
-torch.set_printoptions(threshold=sys.maxsize, linewidth=250)
 
 BASE_DIR = Path(__file__).resolve().parent           # .../src/scripts/Preprocessing
-#REPO_ROOT = BASE_DIR.parents[2]                      # .../CS4287
 input_dir = BASE_DIR / "Output"
 
-data_transform = transforms.Compose([
-    transforms.RandomHorizontalFlip(p=0.25),
-    transforms.ToTensor()
-])
+class CarDDDataset(Dataset):
+    def __init__(self, image_dir, mask_dir):
+        self.image_dir = Path(image_dir)
+        self.mask_dir = Path(mask_dir)
+        self.names = sorted(p.stem for p in self.image_dir.iterdir()
+                            if p.suffix.lower() in (".jpg", ".png"))
+        
+    def __len__(self):
+        return len(self.names)
+    
+    def _find(self, folder, stem):
+        for ext in (".jpg", ".png"):
+            p = folder / (stem + ext)
+            if p.exists():
+                return p
+        raise FileNotFoundError(f"{stem} not found in {folder}")
+    
+    def __getitem__(self, idx):
+        name = self.names[idx]
+        with Image.open(self._find(self.image_dir, name)) as f:
+            img = f.convert("RGB")
+        with Image.open(self._find(self.mask_dir, name)) as f:
+            msk = f.convert("L")
 
-img = Image.open(input_dir / "CarDD-TE" / "CarDD-TE-Image" / "000012.jpg").convert("RGB")
-msk = Image.open(input_dir  / "CarDD-TE" / "CarDD-TE-Mask" / "000012.png").convert("L")
+        image = torch.from_numpy(np.array(img)).permute(2, 0, 1).float() / 255.0
+        mask = (torch.from_numpy(np.array(msk)).unsqueeze(0) > 127).float()
+        return image, mask
+    
+def make_loaders(batch_size = 6):
+    def split(name):
+        return CarDDDataset(
+            input_dir / f"CarDD-{name}" / f"CarDD-{name}-Image",
+            input_dir / f"CarDD-{name}" / f"CarDD-{name}-Mask"
+        )
+    
+    train_ds, val_ds, test_ds = split("TR"), split("VAL"), split("TE")
+    return (
+        DataLoader(train_ds, batch_size = batch_size, shuffle=True),
+        DataLoader(val_ds, batch_size = batch_size, shuffle=False),
+        DataLoader(test_ds, batch_size = batch_size, shuffle=False)
+    )
+    
+if __name__ == "__main__":
+    train_loader, val_loader, test_loader = make_loaders()
+    print(len(train_loader.dataset), len(val_loader.dataset), len(test_loader.dataset))
 
-image_tensor = torch.from_numpy(np.array(img)).permute(2,0,1).float() / 255
-mask_tensor = torch.from_numpy(np.array(msk)).unsqueeze(0).float()
+    images, masks = next(iter(train_loader))
+    print(images.shape, masks.shape)
+    print(masks.unique())
 
-mask_tensor = (mask_tensor > 127).float()
-
-pair = (image_tensor, mask_tensor)
-
-#tensor = data_transform(img)
-
-#print(pair)
-
-print(image_tensor.shape, mask_tensor.shape)   # [3, 576, 384] and [1, 576, 384]
-print(image_tensor.min(), image_tensor.max())  # 0.0 and something near 1.0
-print(mask_tensor.unique())                    # tensor([0., 1.]) means some damage pixels exist
-print(mask_tensor.sum())                       # number of mask pixels, should be > 0
-
-with open(BASE_DIR / "tensor_dump.txt", "w") as f:
-    f.write("IMAGE\n" + str(image_tensor) + "\n\nMASK\n" + str(mask_tensor))
