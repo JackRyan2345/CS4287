@@ -222,3 +222,5 @@ __marimo__/
 CarDD_release/
 
 Output/
+
+tensor_dump.txt
