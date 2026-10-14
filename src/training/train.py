@@ -3,11 +3,14 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from unet_model import UNET
-from BCEDiceLoss import BCEDiceLoss
-from metrics import confusion, scores
 
 import torch
 import torch.nn as nn
+
+import time
+import statistics
+
+from torch.utils.data import DataLoader
 
 def train_one_epoch(model, loader, criterion, optimizer, device):
     model.train()
@@ -58,6 +61,25 @@ def train(train_loader, val_loader, epochs=30, save_path="unet_model.pth"):
             print(f"Model saved with IoU: {best_iou:.4f}")
 
     return model
+
+def cross_validate(fold_loaders, epochs=10):
+    fold_scores = []
+
+    for i, (train_loader, val_loader) in enumerate(fold_loaders):
+        print(f"\n===== Fold {i+1}/{len(fold_loaders)} =====")
+        save_path = f"unet_fold{i+1}.pth"
+        model = train(train_loader, val_loader, epochs=epochs, save_path=save_path)
+
+        model.load_state_dict(torch.load(save_path))
+        device = next(model.parameters()).device
+        _, best = validate(model, val_loader, BCEDiceLoss(), device)
+        fold_scores.append(best)
+
+    for key in ("iou", "f1", "precision", "recall"):
+        values = [s[key] for s in fold_scores]
+        print(f"{key}: {statistics.mean(values):.4f} +- {statistics.stdev(values):.4f}")
+
+    return fold_scores
 
 if __name__ == "__main__":
     # Smoke test with fake data: checks the loop runs end to end, not that the model learns
