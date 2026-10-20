@@ -9,6 +9,8 @@ import torch.nn as nn
 
 import time
 import statistics
+from BCEDiceLoss import BCEDiceLoss
+from metrics import confusion, scores
 
 from torch.utils.data import DataLoader
 
@@ -48,10 +50,16 @@ def train(train_loader, val_loader, epochs=30, save_path="unet_model.pth"):
     criterion = BCEDiceLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
 
+    history = {"train_loss": [], "val_loss": [], "iou": [], "f1": [], "precision": [], "recall": []}
     best_iou = 0.0
     for epoch in range(epochs):
         train_loss = train_one_epoch(model, train_loader, criterion, optimizer, device)
         val_loss, val_score = validate(model, val_loader, criterion, device)
+
+        history["train_loss"].append(train_loss)
+        history["val_loss"].append(val_loss)
+        for k in ("iou", "f1", "precision", "recall"):
+            history[k].append(val_score[k])
 
         print(f"Epoch [{epoch+1}/{epochs}], Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}, Val Scores: {val_score}")
 
@@ -60,7 +68,7 @@ def train(train_loader, val_loader, epochs=30, save_path="unet_model.pth"):
             torch.save(model.state_dict(), save_path)
             print(f"Model saved with IoU: {best_iou:.4f}")
 
-    return model
+    return model, history
 
 def cross_validate(fold_loaders, epochs=10):
     fold_scores = []
@@ -68,7 +76,7 @@ def cross_validate(fold_loaders, epochs=10):
     for i, (train_loader, val_loader) in enumerate(fold_loaders):
         print(f"\n===== Fold {i+1}/{len(fold_loaders)} =====")
         save_path = f"unet_fold{i+1}.pth"
-        model = train(train_loader, val_loader, epochs=epochs, save_path=save_path)
+        model, _ = train(train_loader, val_loader, epochs=epochs, save_path=save_path)
 
         model.load_state_dict(torch.load(save_path))
         device = next(model.parameters()).device
@@ -86,12 +94,20 @@ if __name__ == "__main__":
     import os
     import tempfile
     from torch.utils.data import TensorDataset, DataLoader
+    from plot import plot_history, plot_predictions
 
     images = torch.rand(8, 3, 64, 96)                     # H and W must be divisible by 16
     masks = (torch.rand(8, 1, 64, 96) > 0.8).float()      # binary 0/1, about 20% damage
-    loader = DataLoader(TensorDataset(images, masks), batch_size=2, shuffle=True)
+    loader = DataLoader(TensorDataset(images, masks), batch_size=4, shuffle=True)
 
-    save_path = os.path.join(tempfile.gettempdir(), "smoke_test_unet.pth")
-    train(loader, loader, epochs=30, save_path=save_path)
-    os.remove(save_path)
-    print("Smoke test passed")
+    # save_path = os.path.join(tempfile.gettempdir(), "smoke_test_unet.pth")
+    # train(loader, loader, epochs=30, save_path=save_path)
+    # os.remove(save_path)
+    # print("Smoke test passed")
+
+    model, history = train(loader, loader, epochs=30)
+    plot_history(history, save_path="training_curves.png")
+    plot_predictions(model, loader, device="cuda" if
+                     torch.cuda.is_available() else "cpu",
+                     n=4, save_path="predictions.png")
+
