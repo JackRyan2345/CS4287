@@ -14,11 +14,12 @@ BASE_DIR = Path(__file__).resolve().parent           # .../src/scripts/Preproces
 input_dir = BASE_DIR / "Output"
 
 class CarDDDataset(Dataset):
-    def __init__(self, image_dir, mask_dir):
+    def __init__(self, image_dir, mask_dir, augment=False):
         self.image_dir = Path(image_dir)
         self.mask_dir = Path(mask_dir)
         self.names = sorted(p.stem for p in self.image_dir.iterdir()
                             if p.suffix.lower() in (".jpg", ".png"))
+        self.augment = augment
         
     def __len__(self):
         return len(self.names)
@@ -39,13 +40,20 @@ class CarDDDataset(Dataset):
 
         image = torch.from_numpy(np.array(img)).permute(2, 0, 1).float() / 255.0
         mask = (torch.from_numpy(np.array(msk)).unsqueeze(0) > 127).float()
+        if self.augment:
+            chance = random.random()
+            if chance < 0.25:
+                image = torch.rot90(image, k=2, dims=(1, 2))
+                mask = torch.rot90(mask, k=2, dims=(1, 2))
+
         return image, mask
     
 
-def split(name):
+def split(name, augment=False):
         return CarDDDataset(
             input_dir / f"CarDD-{name}" / f"CarDD-{name}-Image",
-            input_dir / f"CarDD-{name}" / f"CarDD-{name}-Mask"
+            input_dir / f"CarDD-{name}" / f"CarDD-{name}-Mask",
+            augment=augment
         )
 
 def make_loaders(batch_size = 6):
@@ -58,15 +66,15 @@ def make_loaders(batch_size = 6):
     )
 
 def make_fold_loaders(k = 5, batch_size = 6):
-    train_ds, val_ds = split("TR"), split("VAL")
-    pool = ConcatDataset([train_ds, val_ds])
+    train_pool = ConcatDataset([split("TR", augment=True), split("VAL", augment=True)])
+    val_pool = ConcatDataset([split("TR"), split("VAL")])
 
     kf = KFold(n_splits = k, shuffle=True, random_state=42)
     fold_loaders = []
 
-    for train_idx, val_idx in kf.split(range(len(pool))):
-        train_subset = Subset(pool, train_idx)
-        val_subset = Subset(pool, val_idx)
+    for train_idx, val_idx in kf.split(range(len(train_pool))):
+        train_subset = Subset(train_pool, train_idx)
+        val_subset = Subset(val_pool, val_idx)
 
         train_loader = DataLoader(train_subset, batch_size=batch_size, shuffle=True)
         val_loader = DataLoader(val_subset, batch_size=batch_size, shuffle=False)
