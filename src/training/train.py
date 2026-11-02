@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+from tracemalloc import start
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 sys.path.append(str(Path(__file__).resolve().parent))
 
@@ -36,13 +37,15 @@ def validate(model, loader, criterion, device):
     model.eval()
     total, tp, fp, fn = 0, 0, 0, 0
 
-    for images, masks in loader:
+    start = time.time()
+    for i, (images, masks) in enumerate(loader):
         images, masks = images.to(device), masks.to(device)
         logits = model(images)
         total += criterion(logits, masks).item()
         
         t, p, n = confusion(logits, masks)
         tp, fp, fn = tp + t, fp + p, fn + n
+        print(f"batch {i+1}/{len(loader)}  {time.time() - start:.1f}s")
     return total / len(loader), scores(tp, fp, fn)
 
 def train(train_loader, val_loader, epochs=30, save_path="unet_model.pth"):
@@ -70,6 +73,16 @@ def train(train_loader, val_loader, epochs=30, save_path="unet_model.pth"):
             print(f"Model saved with IoU: {best_iou:.4f}")
 
     return model, history
+
+def test(train_loader, model_path="unet_fold1.pth"):
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = UNET().to(device)
+    model.load_state_dict(torch.load(model_path, map_location=device))
+    print(f"Running model on {device}")
+
+    criterion = BCEDiceLoss()
+    test_loss, test_score = validate(model, train_loader, criterion, device)
+    print(f"Test Loss: {test_loss:.4f}, Test Scores: {test_score}")
 
 def cross_validate(fold_loaders, epochs=10):
     fold_scores = []
