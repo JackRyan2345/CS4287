@@ -1,0 +1,167 @@
+Results WITHOUT data augmentation (baseline)
+
+===== Cell 8: # src/test.py =====
+
+===== Fold 1/5 =====
+Epoch [1/10], Train Loss: 0.5806, Val Loss: 0.5032, Val Scores: {'f1': 0.577179491519928, 'precision': 0.514150857925415, 'recall': 0.6578202247619629, 'iou': 0.40565863251686096}
+Model saved with IoU: 0.4057
+Epoch [2/10], Train Loss: 0.4859, Val Loss: 0.4415, Val Scores: {'f1': 0.61094069480896, 'precision': 0.6015964150428772, 'recall': 0.6205798387527466, 'iou': 0.43982332944869995}
+Model saved with IoU: 0.4398
+Epoch [3/10], Train Loss: 0.4308, Val Loss: 0.3949, Val Scores: {'f1': 0.6445299983024597, 'precision': 0.6248652935028076, 'recall': 0.6654727458953857, 'iou': 0.47550302743911743}
+Model saved with IoU: 0.4755
+Epoch [4/10], Train Loss: 0.4002, Val Loss: 0.3877, Val Scores: {'f1': 0.6337510347366333, 'precision': 0.696343719959259, 'recall': 0.5814829468727112, 'iou': 0.4638620913028717}
+Epoch [5/10], Train Loss: 0.3774, Val Loss: 0.3981, Val Scores: {'f1': 0.6304126381874084, 'precision': 0.5140723586082458, 'recall': 0.814814031124115, 'iou': 0.46029382944107056}
+Epoch [6/10], Train Loss: 0.3617, Val Loss: 0.3498, Val Scores: {'f1': 0.6701390147209167, 'precision': 0.710699737071991, 'recall': 0.6339579820632935, 'iou': 0.5039165616035461}
+Model saved with IoU: 0.5039
+Epoch [7/10], Train Loss: 0.3488, Val Loss: 0.3526, Val Scores: {'f1': 0.6679428219795227, 'precision': 0.642020583152771, 'recall': 0.6960463523864746, 'iou': 0.5014370083808899}
+Epoch [8/10], Train Loss: 0.3385, Val Loss: 0.3453, Val Scores: {'f1': 0.6820033192634583, 'precision': 0.6130151152610779, 'recall': 0.7684884071350098, 'iou': 0.5174545049667358}
+Model saved with IoU: 0.5175
+Epoch [9/10], Train Loss: 0.3297, Val Loss: 0.3227, Val Scores: {'f1': 0.7028021216392517, 'precision': 0.6543973684310913, 'recall': 0.7589396834373474, 'iou': 0.5417848229408264}
+Model saved with IoU: 0.5418
+Epoch [10/10], Train Loss: 0.3203, Val Loss: 0.3327, Val Scores: {'f1': 0.6937620639801025, 'precision': 0.631397008895874, 'recall': 0.7697972655296326, 'iou': 0.5311146378517151}
+
+===== Fold 2/5 =====
+Epoch [1/10], Train Loss: 0.6050, Val Loss: 0.5417, Val Scores: {'f1': 0.5525527000427246, 'precision': 0.4743908643722534, 'recall': 0.6615514755249023, 'iou': 0.3817428648471832}
+Model saved with IoU: 0.3817
+Epoch [2/10], Train Loss: 0.5106, Val Loss: 0.4864, Val Scores: {'f1': 0.5569468140602112, 'precision': 0.5535262227058411, 'recall': 0.5604099631309509, 'iou': 0.3859502971172333}
+Model saved with IoU: 0.3860
+Epoch [3/10], Train Loss: 0.4565, Val Loss: 0.4575, Val Scores: {'f1': 0.5662111043930054, 'precision': 0.4877910912036896, 'recall': 0.6746757626533508, 'iou': 0.3949055075645447}
+Model saved with IoU: 0.3949
+Epoch [4/10], Train Loss: 0.4180, Val Loss: 0.4110, Val Scores: {'f1': 0.6158261299133301, 'precision': 0.5905908942222595, 'recall': 0.6433143019676208, 'iou': 0.44490522146224976}
+Model saved with IoU: 0.4449
+Epoch [5/10], Train Loss: 0.3899, Val Loss: 0.3895, Val Scores: {'f1': 0.632449209690094, 'precision': 0.6233011484146118, 'recall': 0.6418697237968445, 'iou': 0.4624685049057007}
+Model saved with IoU: 0.4625
+Epoch [6/10], Train Loss: 0.3721, Val Loss: 0.3921, Val Scores: {'f1': 0.6130825281143188, 'precision': 0.5833973288536072, 'recall': 0.6459506750106812, 'iou': 0.4420468807220459}
+Epoch [7/10], Train Loss: 0.3552, Val Loss: 0.3886, Val Scores: {'f1': 0.6105433702468872, 'precision': 0.7674325704574585, 'recall': 0.5069131255149841, 'iou': 0.43941155076026917}
+Epoch [8/10], Train Loss: 0.3419, Val Loss: 0.3882, Val Scores: {'f1': 0.6182132959365845, 'precision': 0.49269619584083557, 'recall': 0.8295443654060364, 'iou': 0.44740140438079834}
+Epoch [9/10], Train Loss: 0.3328, Val Loss: 0.3499, Val Scores: {'f1': 0.6663902997970581, 'precision': 0.612886905670166, 'recall': 0.7301285862922668, 'iou': 0.49968916177749634}
+Model saved with IoU: 0.4997
+Epoch [10/10], Train Loss: 0.3216, Val Loss: 0.3268, Val Scores: {'f1': 0.6840878129005432, 'precision': 0.6575617790222168, 'recall': 0.7128438353538513, 'iou': 0.519858181476593}
+Model saved with IoU: 0.5199
+
+===== Fold 3/5 =====
+Epoch [1/10], Train Loss: 0.5329, Val Loss: 0.4828, Val Scores: {'f1': 0.5708723068237305, 'precision': 0.46507787704467773, 'recall': 0.7389709949493408, 'iou': 0.3994550406932831}
+Model saved with IoU: 0.3995
+Epoch [2/10], Train Loss: 0.4546, Val Loss: 0.4437, Val Scores: {'f1': 0.579600989818573, 'precision': 0.4633447825908661, 'recall': 0.7737364172935486, 'iou': 0.40805503726005554}
+Model saved with IoU: 0.4081
+Epoch [3/10], Train Loss: 0.4126, Val Loss: 0.3979, Val Scores: {'f1': 0.6194191575050354, 'precision': 0.5486636161804199, 'recall': 0.7111259698867798, 'iou': 0.44866564869880676}
+Model saved with IoU: 0.4487
+Epoch [4/10], Train Loss: 0.3878, Val Loss: 0.4293, Val Scores: {'f1': 0.5738498568534851, 'precision': 0.6548117995262146, 'recall': 0.5107054114341736, 'iou': 0.40237686038017273}
+Epoch [5/10], Train Loss: 0.3707, Val Loss: 0.3598, Val Scores: {'f1': 0.6544501185417175, 'precision': 0.5868909955024719, 'recall': 0.739586591720581, 'iou': 0.4863811731338501}
+Model saved with IoU: 0.4864
+Epoch [6/10], Train Loss: 0.3580, Val Loss: 0.3755, Val Scores: {'f1': 0.6344646215438843, 'precision': 0.7499324083328247, 'recall': 0.5498098731040955, 'iou': 0.4646269977092743}
+Epoch [7/10], Train Loss: 0.3445, Val Loss: 0.3469, Val Scores: {'f1': 0.6650304198265076, 'precision': 0.6845743656158447, 'recall': 0.6465714573860168, 'iou': 0.49816152453422546}
+Model saved with IoU: 0.4982
+Epoch [8/10], Train Loss: 0.3364, Val Loss: 0.3493, Val Scores: {'f1': 0.6747007966041565, 'precision': 0.5891194939613342, 'recall': 0.7893726825714111, 'iou': 0.509093165397644}
+Model saved with IoU: 0.5091
+Epoch [9/10], Train Loss: 0.3254, Val Loss: 0.3326, Val Scores: {'f1': 0.6902360916137695, 'precision': 0.6574327349662781, 'recall': 0.7264848351478577, 'iou': 0.5269927382469177}
+Model saved with IoU: 0.5270
+Epoch [10/10], Train Loss: 0.3154, Val Loss: 0.3268, Val Scores: {'f1': 0.6954483389854431, 'precision': 0.6250970363616943, 'recall': 0.7836430668830872, 'iou': 0.5330936908721924}
+Model saved with IoU: 0.5331
+
+===== Fold 4/5 =====
+Epoch [1/10], Train Loss: 0.5892, Val Loss: 0.5323, Val Scores: {'f1': 0.5585894584655762, 'precision': 0.488547146320343, 'recall': 0.6520766615867615, 'iou': 0.3875297009944916}
+Model saved with IoU: 0.3875
+Epoch [2/10], Train Loss: 0.4996, Val Loss: 0.4616, Val Scores: {'f1': 0.6031044721603394, 'precision': 0.5683266520500183, 'recall': 0.6424161791801453, 'iou': 0.43174633383750916}
+Model saved with IoU: 0.4317
+Epoch [3/10], Train Loss: 0.4466, Val Loss: 0.4224, Val Scores: {'f1': 0.6167373657226562, 'precision': 0.5768061876296997, 'recall': 0.6626085042953491, 'iou': 0.44585704803466797}
+Model saved with IoU: 0.4459
+Epoch [4/10], Train Loss: 0.4085, Val Loss: 0.4155, Val Scores: {'f1': 0.5757841467857361, 'precision': 0.7224172949790955, 'recall': 0.47863319516181946, 'iou': 0.40428146719932556}
+Epoch [5/10], Train Loss: 0.3822, Val Loss: 0.4033, Val Scores: {'f1': 0.5763304233551025, 'precision': 0.6776622533798218, 'recall': 0.5013612508773804, 'iou': 0.40482041239738464}
+Epoch [6/10], Train Loss: 0.3623, Val Loss: 0.3748, Val Scores: {'f1': 0.6238759160041809, 'precision': 0.6914094090461731, 'recall': 0.5683611631393433, 'iou': 0.4533572494983673}
+Model saved with IoU: 0.4534
+Epoch [7/10], Train Loss: 0.3474, Val Loss: 0.3694, Val Scores: {'f1': 0.6434372067451477, 'precision': 0.6002101302146912, 'recall': 0.6933740377426147, 'iou': 0.4743143916130066}
+Model saved with IoU: 0.4743
+Epoch [8/10], Train Loss: 0.3359, Val Loss: 0.3573, Val Scores: {'f1': 0.6519287824630737, 'precision': 0.665562093257904, 'recall': 0.6388428211212158, 'iou': 0.48360109329223633}
+Model saved with IoU: 0.4836
+Epoch [9/10], Train Loss: 0.3250, Val Loss: 0.3360, Val Scores: {'f1': 0.6761807203292847, 'precision': 0.6499022841453552, 'recall': 0.7046738266944885, 'iou': 0.5107802152633667}
+Model saved with IoU: 0.5108
+Epoch [10/10], Train Loss: 0.3164, Val Loss: 0.3446, Val Scores: {'f1': 0.6666404008865356, 'precision': 0.7057877779006958, 'recall': 0.6316074132919312, 'iou': 0.49997037649154663}
+
+===== Fold 5/5 =====
+Epoch [1/10], Train Loss: 0.5708, Val Loss: 0.5117, Val Scores: {'f1': 0.5770552158355713, 'precision': 0.4868972897529602, 'recall': 0.7081893086433411, 'iou': 0.40553587675094604}
+Model saved with IoU: 0.4055
+Epoch [2/10], Train Loss: 0.4801, Val Loss: 0.4779, Val Scores: {'f1': 0.5735629200935364, 'precision': 0.44558238983154297, 'recall': 0.8046852350234985, 'iou': 0.4020947813987732}
+Epoch [3/10], Train Loss: 0.4300, Val Loss: 0.4150, Val Scores: {'f1': 0.6086016893386841, 'precision': 0.6296222805976868, 'recall': 0.5889393091201782, 'iou': 0.4374029040336609}
+Model saved with IoU: 0.4374
+Epoch [4/10], Train Loss: 0.3956, Val Loss: 0.3891, Val Scores: {'f1': 0.6085622310638428, 'precision': 0.6215267777442932, 'recall': 0.5961275100708008, 'iou': 0.4373621940612793}
+Epoch [5/10], Train Loss: 0.3745, Val Loss: 0.3884, Val Scores: {'f1': 0.595877468585968, 'precision': 0.6906283497810364, 'recall': 0.523988664150238, 'iou': 0.42437711358070374}
+Epoch [6/10], Train Loss: 0.3597, Val Loss: 0.3544, Val Scores: {'f1': 0.6572227478027344, 'precision': 0.5749379992485046, 'recall': 0.7669944763183594, 'iou': 0.4894503355026245}
+Model saved with IoU: 0.4895
+Epoch [7/10], Train Loss: 0.3458, Val Loss: 0.3500, Val Scores: {'f1': 0.6490146517753601, 'precision': 0.638349175453186, 'recall': 0.6600425839424133, 'iou': 0.4804009199142456}
+Epoch [8/10], Train Loss: 0.3347, Val Loss: 0.3379, Val Scores: {'f1': 0.6757621765136719, 'precision': 0.6668345928192139, 'recall': 0.6849319338798523, 'iou': 0.5103026628494263}
+Model saved with IoU: 0.5103
+Epoch [9/10], Train Loss: 0.3259, Val Loss: 0.3443, Val Scores: {'f1': 0.6673747897148132, 'precision': 0.7288884520530701, 'recall': 0.615435779094696, 'iou': 0.5007970333099365}
+Epoch [10/10], Train Loss: 0.3161, Val Loss: 0.3238, Val Scores: {'f1': 0.676732063293457, 'precision': 0.7240957617759705, 'recall': 0.6351840496063232, 'iou': 0.5114096403121948}
+Model saved with IoU: 0.5114
+iou: 0.5234 +- 0.0137
+f1: 0.6871 +- 0.0117
+precision: 0.6622 +- 0.0369
+recall: 0.7191 +- 0.0571
+===== Cell 9: device = "cuda" if torch.cuda.is_available() else "cpu" =====
+===== Cell 10: test_loader = make_loaders(batch_size=6)[2] =====
+Running model on cpu
+batch 1/63  3.1s
+batch 2/63  6.2s
+batch 3/63  9.2s
+batch 4/63  12.2s
+batch 5/63  15.3s
+batch 6/63  18.2s
+batch 7/63  21.3s
+batch 8/63  24.3s
+batch 9/63  27.2s
+batch 10/63  30.1s
+batch 11/63  32.9s
+batch 12/63  35.8s
+batch 13/63  38.7s
+batch 14/63  41.7s
+batch 15/63  44.9s
+batch 16/63  48.0s
+batch 17/63  51.4s
+batch 18/63  54.5s
+batch 19/63  57.5s
+batch 20/63  60.8s
+batch 21/63  63.8s
+batch 22/63  66.8s
+batch 23/63  70.0s
+batch 24/63  73.0s
+batch 25/63  76.1s
+batch 26/63  79.2s
+batch 27/63  82.5s
+batch 28/63  85.6s
+batch 29/63  88.9s
+batch 30/63  91.9s
+batch 31/63  95.0s
+batch 32/63  98.1s
+batch 33/63  101.1s
+batch 34/63  104.5s
+batch 35/63  107.5s
+batch 36/63  110.6s
+batch 37/63  113.8s
+batch 38/63  116.9s
+batch 39/63  120.0s
+batch 40/63  123.2s
+batch 41/63  126.1s
+batch 42/63  129.1s
+batch 43/63  132.2s
+batch 44/63  135.3s
+batch 45/63  138.3s
+batch 46/63  141.3s
+batch 47/63  144.4s
+batch 48/63  147.5s
+batch 49/63  150.6s
+batch 50/63  153.7s
+batch 51/63  156.7s
+batch 52/63  159.7s
+batch 53/63  162.7s
+batch 54/63  165.8s
+batch 55/63  168.9s
+batch 56/63  172.0s
+batch 57/63  175.0s
+batch 58/63  178.0s
+batch 59/63  181.0s
+batch 60/63  184.0s
+batch 61/63  187.0s
+batch 62/63  190.1s
+batch 63/63  191.0s
+Test Loss: 0.3303, Test Scores: {'f1': 0.6827092170715332, 'precision': 0.6249194741249084, 'recall': 0.7522763609886169, 'iou': 0.5182676911354065}
